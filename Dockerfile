@@ -1,4 +1,4 @@
-ARG VERSION=19
+ARG VERSION=18
 
 FROM --platform=$BUILDPLATFORM node:$VERSION-alpine as build
 
