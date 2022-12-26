@@ -1,6 +1,6 @@
 ARG VERSION=18
 
-FROM --platform=$BUILDPLATFORM node:$VERSION-alpine as build
+FROM --platform=$BUILDPLATFORM node:$VERSION as build
 
 ENV PYTHONUNBUFFERED=1
 
