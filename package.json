@@ -87,8 +87,5 @@
   "bin": {
     "soketi": "bin/server.js",
     "soketi-pm2": "bin/pm2.js"
-  },
-  "engines": {
-    "node": "18"
   }
 }

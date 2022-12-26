@@ -1,6 +1,6 @@
-ARG VERSION=18
+ARG VERSION=lts
 
-FROM --platform=$BUILDPLATFORM node:$VERSION-alpine as build
+FROM --platform=$BUILDPLATFORM node:$VERSION-bullseye as build
 
 ENV PYTHONUNBUFFERED=1
 
@@ -8,11 +8,9 @@ COPY . /tmp/build
 
 WORKDIR /tmp/build
 
-RUN apk add --no-cache --update git python3 gcompat ; \
-    apk add --virtual build-dependencies build-base gcc wget ; \
-    ln -sf python3 /usr/bin/python ; \
-    python3 -m ensurepip ; \
-    pip3 install --no-cache --upgrade pip setuptools ; \
+RUN apt-get update -y ; \
+    apt-get upgrade -y ; \
+    apt-get install -y git python3 gcc wget ; \
     npm ci ; \
     npm run build ; \
     npm ci --omit=dev --ignore-scripts ; \
@@ -23,7 +21,7 @@ RUN apk add --no-cache --update git python3 gcompat ; \
     mkdir -p /app ; \
     cp -r bin/ dist/ node_modules/ LICENSE package.json package-lock.json README.md /app/
 
-FROM --platform=$BUILDPLATFORM node:$VERSION-alpine
+FROM --platform=$BUILDPLATFORM node:$VERSION-bullseye-slim
 
 LABEL maintainer="Renoki Co. <alex@renoki.org>"
 
